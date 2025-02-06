@@ -6,8 +6,8 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 def laggedCorr(a, b):
-    a = np.array(a) # stock value of company a
-    b = np.array(b)
+    a = np.array(a) # stock values of company a 
+    b = np.array(b) # stock values of company b
   
     n = len(a)
     max_lag = min(n // 4, 20)  # Maximum lag to consider
