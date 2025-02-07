@@ -55,7 +55,9 @@ tickers = [
 ]
 
 # Download the closing prices
-data = yf.download(tickers, start='2025-01-04', end='2025-02-04')['Close']
+data = yf.download(tickers, start='2025-01-04', end='2025-01-31')['Close']
+
+print(data)
 
 results = []
 
@@ -66,6 +68,8 @@ for i in range(len(data.columns)):
         stock_b = data.iloc[:, j]
         corr, lag = laggedCorr(stock_a.values, stock_b.values)
         results.append((data.columns[i], data.columns[j], corr, lag))
+
+
 
 # Create a DataFrame for correlation results
 correlation_matrix = pd.DataFrame(index=data.columns, columns=data.columns)
