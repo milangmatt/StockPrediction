@@ -3,13 +3,23 @@ import pandas as pd
 import yfinance as yf
 from scipy import stats
 import matplotlib.pyplot as plt
-import seaborn as sns
 
 def laggedCorr(a, b):
-    a = np.array(a) # stock values of company a 
-    b = np.array(b) # stock values of company b
+    """
+    Calculate the maximum correlation between two series considering different lags.
+    
+    Args:
+        a, b: numpy arrays of same length containing the time series data
+        
+    Returns:
+        float: Maximum correlation coefficient found across all lags
+        int: Lag at which the maximum correlation occurs
+    """
+    a = np.array(a)
+    b = np.array(b)
   
     n = len(a)
+
     max_lag = min(n // 4, 20)  # Maximum lag to consider
     
     correlations = []
@@ -67,35 +77,34 @@ for i in range(len(data.columns)):
         corr, lag = laggedCorr(stock_a.values, stock_b.values)
         results.append((data.columns[i], data.columns[j], corr, lag))
 
-# Create a DataFrame for correlation results
-correlation_matrix = pd.DataFrame(index=data.columns, columns=data.columns)
-lag_matrix = pd.DataFrame(index=data.columns, columns=data.columns)
-
-# Fill the correlation and lag matrices
+# Display the results
+print("All Lagged Correlations:")
 for stock_a, stock_b, corr, lag in results:
-    correlation_matrix.loc[stock_a, stock_b] = corr
-    correlation_matrix.loc[stock_b, stock_a] = corr  # Symmetric matrix
-    lag_matrix.loc[stock_a, stock_b] = lag
-    lag_matrix.loc[stock_b, stock_a] = lag  # Symmetric matrix
+    print(f"{stock_a} and {stock_b}: Correlation = {corr:.2f}, Lag = {lag} days")
 
-# Convert the matrices to numeric
-correlation_matrix = correlation_matrix.astype(float)
-lag_matrix = lag_matrix.astype(float)
+# Identify negatively correlated pairs
+negatively_correlated = [(stock_a, stock_b, corr, lag) for stock_a, stock_b, corr, lag in results if corr < 0]
 
-# Plotting the correlation and lag heatmaps
-fig, axes = plt.subplots(1, 2, figsize=(20, 10))
+positively_correlated = [(stock_a, stock_b, corr, lag) for stock_a, stock_b, corr, lag in results if corr >= 0]
 
-# Correlation heatmap
-sns.heatmap(correlation_matrix, annot=True, fmt=".2f", cmap='coolwarm', center=0, ax=axes[0], annot_kws={"size": 8,"rotation": 90})
-axes[0].set_title('Correlation Heatmap between Top NSE Stocks')
-axes[0].set_xlabel('Stocks')
-axes[0].set_ylabel('Stocks')
+print("\nNegatively Correlated Pairs:")
+for stock_a, stock_b, corr, lag in negatively_correlated:
+    print(f"{stock_a} and {stock_b}: Correlation = {corr:.2f}, Lag = {lag} days")
 
-# Lag heatmap
-sns.heatmap(lag_matrix, annot=True, fmt=".0f", cmap='viridis', ax=axes[1],annot_kws={"size": 8,"rotation": 90})
-axes[1].set_title('Lag Heatmap between Top NSE Stocks')
-axes[1].set_xlabel('Stocks')
-axes[1].set_ylabel('Stocks')
+print("\nPositively Correlated Pairs:")
+for stock_a, stock_b, corr, lag in positively_correlated:
+    print(f"{stock_a} and {stock_b}: Correlation = {corr:.2f}, Lag = {lag} days")
 
-plt.tight_layout()
+# Plotting the correlations
+plt.figure(figsize=(12, 6))
+for stock_a, stock_b, corr, lag in results:
+    plt.scatter(lag, corr, alpha=0.5, label=f'{stock_a} vs {stock_b}' if lag == 0 else "")
+
+plt.title('Lagged Correlations between Top NSE Stocks')
+plt.xlabel('Lag (days)')  # Labeling the x-axis as days
+plt.ylabel('Correlation Coefficient')
+plt.axhline(0, color='grey', lw=1, ls='--')
+plt.axvline(0, color='grey', lw=1, ls='--')
+plt.grid()
+plt.legend(loc='upper right', bbox_to_anchor=(1.2, 1))
 plt.show()
