@@ -21,7 +21,7 @@ def laggedCorr(a, b):
   
     n = len(a)
 
-    max_lag = min(n // 4, 20)  # Maximum lag to consider
+    max_lag = 20 #min(n // 4, 20)  # Maximum lag to consider
     
     correlations = []
     lags = []
@@ -43,30 +43,112 @@ def laggedCorr(a, b):
 
 # List of top 100 Indian stocks (NSE tickers)
 tickers = [
-    'HDFCBANK.NS',
-    'ICICIBANK.NS',
-    'KOTAKBANK.NS',
-    'AXISBANK.NS',
-    'MARUTI.NS',
-    'TATAMOTORS.NS',
-    'HEROMOTOCO.NS',
-    'TCS.NS',
-    'INFY.NS',
-    'WIPRO.NS',
-    'HCLTECH.NS',
-    'HINDUNILVR.NS',
-    'ITC.NS',
-    'NESTLEIND.NS',
-    'BRITANNIA.NS',
-    'RELIANCE.NS',
-    'NTPC.NS',
-    'TATAPOWER.NS',
-    'TITAN.NS',
+    'SHRIRAMFIN.NS',
+'BAJAJHLDNG.NS',
+'CHOLAFIN.NS',
+'BAJAJFINSV.NS',
+'BAJFINANCE.NS',
+'INDUSINDBK.NS',
+'HINDALCO.NS',
+'COALINDIA.NS',
+'HDFCBANK.NS',
+'SUNPHARMA.NS',
+'ZOMATO.NS',
+'AXISBANK.NS',
+'JSWSTEEL.NS',
+'ICICIGI.NS',
+'NAUKRI.NS',
+'NESTLEIND.NS',
+'RELIANCE.NS',
+'INDIGO.NS',
+'BHARTIARTL.NS',
+'ICICIBANK.NS',
+'WIPRO.NS',
+'POWERGRID.NS',
+'TITAN.NS',
+'ATGL.NS',
+'SHREECEM.NS',
+'ADANIPORTS.NS',
+'SBILIFE.NS',
+'DRREDDY.NS',
+'TATACONSUM.NS',
+'INFY.NS',
+'BRITANNIA.NS',
+'ZYDUSLIFE.NS',
+'ADANIENT.NS',
+'HAL.NS',
+'ADANIENSOL.NS',
+'LODHA.NS',
+'TCS.NS',
+'JINDALSTEL.NS',
+'ITC.NS',
+'TATASTEEL.NS',
+'HINDUNILVR.NS',
+'HDFCLIFE.NS',
+'BANKBARODA.NS',
+'PFC.NS',
+'DMART.NS',
+'SBIN.NS',
+'GODREJCP.NS',
+'UNITDSPR.NS',
+'UNIONBANK.NS',
+'KOTAKBANK.NS',
+'ADANIPOWER.NS',
+'BOSCHLTD.NS',
+'HCLTECH.NS',
+'MARUTI.NS',
+'AMBUJACEM.NS',
+'NTPC.NS',
+'LT.NS',
+'ASIANPAINT.NS',
+'RECLTD.NS',
+'APOLLOHOSP.NS',
+'PIDILITIND.NS',
+'ICICIPRULI.NS',
+'TORNTPHARM.NS',
+'PNB.NS',
+'BEL.NS',
+'TECHM.NS',
+'LICI.NS',
+'CIPLA.NS',
+'NHPC.NS',
+'JIOFIN.NS',
+'TATAMOTORS.NS',
+'DABUR.NS',
+'ONGC.NS',
+'IRFC.NS',
+'DIVISLAB.NS',
+'GAIL.NS',
+'LTIM.NS',
+'IRCTC.NS',
+'ADANIGREEN.NS',
+'VEDL.NS',
+'EICHERMOT.NS',
+'CANBK.NS',
+'IOC.NS',
+'GRASIM.NS',
+'TVSMOTOR.NS',
+'HEROMOTOCO.NS',
+'MOTHERSON.NS',
+'DLF.NS',
+'BPCL.NS',
+'JSWENERGY.NS',
+'BAJAJ-AUTO.NS',
+'M&M.NS',
+'TRENT.NS',
+'TATAPOWER.NS',
+'ABB.NS',
+'SIEMENS.NS',
+'BHEL.NS',
+'ULTRACEMCO.NS',
+'HAVELLS.NS',
+'VBL.NS',
+
     # Add more tickers to reach 100
 ]
 
 # Download the closing prices
-data = yf.download(tickers, start='2025-01-05', end='2025-02-05')['Close']
+data = yf.download(tickers, start='2024-01-05', end='2025-01-30')['Close']
 
 results = []
 
@@ -105,7 +187,7 @@ for stock_a, stock_b, corr, lag in results:
 
 # Convert the correlation matrix to numeric
 correlation_matrix = correlation_matrix.astype(float)
-
+'''
 # Plotting the correlation heatmap
 plt.figure(figsize=(12, 10))
 sns.heatmap(correlation_matrix, annot=True, fmt=".2f", cmap='coolwarm', center=0)
@@ -127,3 +209,4 @@ plt.axvline(0, color='grey', lw=1, ls='--')
 plt.grid()
 plt.legend(loc='upper right', bbox_to_anchor=(1.2, 1))
 plt.show()
+'''
