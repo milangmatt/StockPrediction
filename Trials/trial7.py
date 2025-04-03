@@ -41,7 +41,7 @@ def laggedCorr(a, b):
     return max_corr, lags[max_lag_index]
 
 # Read the stock data from CSV file
-data = pd.read_csv('/home/ds-pl-09/Downloads/StockPrediction-main/Outputs/csv/data_2025-02-27_14-47-01.csv', parse_dates=['Date'])
+data = pd.read_csv('D:\Projects\Mini Project\StockPrediction\Outputs\csv\stocks.csv', parse_dates=['Date'])
 
 # Set the Date column as index
 data.set_index('Date', inplace=True)
